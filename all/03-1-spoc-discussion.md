@@ -31,6 +31,159 @@ buddy systemm：优点：分配和回收速度快，算法简单，当一个大�
 
 请参考ucore lab2代码，采用`struct pmm_manager` 根据你的`学号 mod 4`的结果值，选择四种（0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm）分配算法中的一种或多种，在应用程序层面(可以 用python,ruby,C++，C，LISP等高语言)来实现，给出你的设思路，并给出测试用例。 (spoc)
 
+>include前面的#未写，写完显示格式就不对了，请见谅！
+include <iostream>
+include <stdio.h>
+include <stdlib.h>
+
+using namespace std;
+
+int base = 0;
+int size = 2147483647;
+
+struct addr_list
+{
+	int begin;
+	int length;
+	bool is_free;
+	addr_list *next;
+};
+
+addr_list* fr;
+
+void init()
+{
+	fr = new addr_list();
+	fr->begin = base;
+	fr->length = size;
+	fr->is_free = true;
+	fr->next = NULL;
+	return;
+}
+
+void add_malloc(int len)
+{
+	int ret_begin = 0;
+	int ret_length = 0;
+	if(fr == NULL)
+	{
+		printf("there is no free addr\n");
+		return;
+	}
+	addr_list* p = fr;
+	addr_list* q = p->next;
+	addr_list* ret = fr;
+	while(p != NULL)
+	{
+		if(q != NULL)
+		{
+			if(ret->length < q->length)
+				ret = q;
+			p = q;
+			q = p->next;
+		}
+		else
+			break;
+	}
+	ret_begin = ret->begin;
+	if(ret->length < len)
+	{
+		printf("can not find this addr\n");
+		return;
+	}
+	int a = 1; 
+	for(int i=0; ; i++)
+	{
+		if(a >= len)
+			break;
+		a = a * 2;
+	}
+	ret_length = a;
+	addr_list* b = fr;
+	ret->begin = ret->begin + ret_length;
+	ret->length = ret->length - ret_length;
+	if(ret->length == 0)
+	{
+		addr_list* b = fr;
+		addr_list* c = b->next;
+		if(ret == fr)
+			fr = fr->next;
+		while(c != NULL)
+		{
+			if( c == ret)
+			{
+				b->next = ret->next;
+			}
+			else
+			{
+				b = c;
+				c = b->next;
+			}
+		}
+		ret = NULL;
+	}
+	printf("the molloc addr's begin addr is %d, length is %d\n", ret_begin, ret_length);
+	return;
+}
+
+void addr_back(int begin, int length)
+{
+	addr_list* a = new addr_list;
+	a->begin = begin;
+	a->length = length;
+	a->is_free = true;
+	a->next = NULL;
+	if(fr == NULL){
+		fr = a;
+		return;
+	}
+	else{
+		if(begin < fr->begin){
+			if(begin + length == fr->begin){
+				fr->begin = begin;
+				fr->length = fr->begin + length;
+			}
+			return;
+		}	
+		addr_list* p = fr;
+		addr_list* q = fr->next;
+		while(p != NULL){
+			if(q != NULL){
+				if(p->begin < begin && q->begin >begin){
+					p->next = a;
+					a->next = q;
+					if(p->begin + p->length == begin){
+						p->length = p->length + length;
+						p->next = q;
+						if(p->begin + p->length == q->begin){
+							p->length = p->length + q->length;
+							p->next = q->next;
+						}
+					}
+					else{
+						if(begin + length == q->begin){
+							a->length = a->length + length;
+							a->next = q->next;
+						}
+					}
+					break;
+				}
+			}
+			else{
+				if(p->begin + p->length == begin){
+					p->length = p->length + length;
+					p->next = NULL;
+				}
+				else
+					p->next = a;
+				break;
+			}
+			p = q;
+			q = p->next;
+		}
+				
+	}
+}
 --- 
 
 ## 扩展思考题
