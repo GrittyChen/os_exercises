@@ -31,16 +31,13 @@ buddy systemm：优点：分配和回收速度快，算法简单，当一个大�
 
 请参考ucore lab2代码，采用`struct pmm_manager` 根据你的`学号 mod 4`的结果值，选择四种（0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm）分配算法中的一种或多种，在应用程序层面(可以 用python,ruby,C++，C，LISP等高语言)来实现，给出你的设思路，并给出测试用例。 (spoc)
 
->include前面的"#"未写，写完显示格式就不对了，请见谅！
+> include前面的"#"未写，写完显示格式就不对了，请见谅！
 include <iostream>
 include <stdio.h>
 include <stdlib.h>
-
 using namespace std;
-
 int base = 0;
 int size = 2147483647;
-
 struct addr_list
 {
 	int begin;
@@ -48,9 +45,7 @@ struct addr_list
 	bool is_free;
 	addr_list *next;
 };
-
 addr_list* fr;
-
 void init()
 {
 	fr = new addr_list();
@@ -60,7 +55,6 @@ void init()
 	fr->next = NULL;
 	return;
 }
-
 void add_malloc(int len)
 {
 	int ret_begin = 0;
@@ -125,7 +119,6 @@ void add_malloc(int len)
 	printf("the molloc addr's begin addr is %d, length is %d\n", ret_begin, ret_length);
 	return;
 }
-
 void addr_back(int begin, int length)
 {
 	addr_list* a = new addr_list;
@@ -181,7 +174,6 @@ void addr_back(int begin, int length)
 			p = q;
 			q = p->next;
 		}
-				
 	}
 }
 
