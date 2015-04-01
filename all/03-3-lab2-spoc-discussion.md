@@ -31,13 +31,13 @@ x86保护模式中权限管理无处不在，下面哪些时候要检查访问�
 - [x]  
 
 >  准备工作有:
-1、allocate a page as directory table;
-2、clear the page allocate;
-3、map 0xC0000000-0xF8000000(va) to 0x00000000-0x38000000(pa)
-4、map 0x00000000-0x00100000(va) to 0x00000000-0x00100000(pa)
-5、set CR3 & bit 31 of CR0
-6、update GDT
-7、unmap 0x00000000-0x00100000
+1、allocate a page as directory table;  
+2、clear the page allocate;  
+3、map 0xC0000000-0xF8000000(va) to 0x00000000-0x38000000(pa)  
+4、map 0x00000000-0x00100000(va) to 0x00000000-0x00100000(pa)  
+5、set CR3 & bit 31 of CR0  
+6、update GDT  
+7、unmap 0x00000000-0x00100000  
 
 ---
 
@@ -78,7 +78,7 @@ e820map:
 修改lab2，让其显示` type="some string"` 让人能够读懂，而不是不好理解的数字1,2  (easy) 
 - [x]  
 
-> 
+> 在pmm.c当中的page_init函数中，我们可以知道这些信息其实是有这个函数负责输出的，这个type是map对应的type，在memlayout.h的文件当中的map的结构体当中我们找到map的type当中对应的，知道这个type究竟是否是有效的
 
 （4）(spoc)有一台只有页机制的简化80386的32bit计算机，有地址范围位0~256MB的物理内存空间（physical memory），可表示大小为256MB，范围为0xC0000000~0xD0000000的虚拟地址空间（virtual address space）,页大小（page size）为4KB，采用二级页表，一个页目录项（page directory entry ，PDE）大小为4B,一个页表项（page-table entries PTEs）大小为4B，1个页目录表大小为4KB，1个页表大小为4KB。
 ```
@@ -117,7 +117,56 @@ va 0xcd82c07c, pa 0x0c20907c, pde_idx 0x00000336, pde_ctx  0x00037003, pte_idx 0
 
 - [x]  
 
-> 
+> 答案为:  
+va 0xc2265b1f, pa 0x0d8f1b1f, pde_idx 0x00000308, pde_ctx 0x00009003, pte_idx 0x00000265, pte_ctx 0x8f100003  
+va 0xcc386bbc, pa 0x0414cbbc, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000386, pte_ctx 0x14c00003  
+va 0xc7ed4d57, pa 0x07311d57, pde_idx 0x0000031f, pde_ctx 0x00020003, pte_idx 0x000002d4, pte_ctx 0x31100003  
+va 0xca6cecc0, pa 0x0c9e9cc0, pde_idx 0x00000329, pde_ctx 0x0002a003, pte_idx 0x000002ce, pte_ctx 0x9e900003  
+va 0xc18072e8, pa 0x007412e8, pde_idx 0x00000306, pde_ctx 0x00007003, pte_idx 0x00000007, pte_ctx 0x74100003  
+va 0xcd5f4b3a, pa 0x06ec9b3a, pde_idx 0x00000335, pde_ctx 0x00036003, pte_idx 0x000001f4, pte_ctx 0xec900003  
+va 0xcc324c99, pa 0x0008ac99, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000324, pte_ctx 0x08a00003  
+va 0xc7204e52, pa 0x0b8b6e52, pde_idx 0x0000031c, pde_ctx 0x0001d003, pte_idx 0x00000204, pte_ctx 0x8b600003  
+va 0xc3a90293, pa 0x0f1fd293, pde_idx 0x0000030e, pde_ctx 0x0000f003, pte_idx 0x00000290, pte_ctx 0x1fd00003  
+va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x7d400003  
+va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x7d400003  
+va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x7d400003  
+代码如下所示：  
+\#include <stdio.h>  
+\#include <stdlib.h>  
+int char2int(char a){  
+	return (a>58)?(a-87):(a-48);  
+}  
+int value(char* a,int start){  
+	int i=0,sum=0;  
+	for(;i<8;i++){  
+		sum*=16;  
+		sum+=char2int(a[start+i]);  
+	}  
+	return sum;  
+}  
+int main(){  
+	FILE *fp=fopen("data.txt","rt");  
+	int index=0;  
+	char a[1024];  
+	int offset = 9;  
+	unsigned int page=0x00;  
+	int data1=0,data2=0;  
+	int pde_idx=0,pde_ctx,pte_idx,pte_ctx;  
+	int i=0;  
+	while(!feof(fp)){  
+		 fgets(a,1000,fp);  
+			data1=value(a,5);  
+			data2=value(a,20);  
+			unsigned int data3=(unsigned int)data1;  
+			unsigned int data4=(unsigned int)data2;  
+			pde_idx=data3/(1024*1024*4);  
+			pde_ctx=((data3/(1024*1024*4)-0x300)+1)<<12|3;  
+			pte_idx=(data3/4096)%1024;  
+			pte_ctx=(data4/4096)<<20|3;  
+			printf("va 0x%.8x, pa 0x%.8x, pde_idx 0x%.8x, pde_ctx 0x%.8x, pte_idx 0x%.8x, pte_ctx 0x%.8x\n",data1,data2,pde_idx,pde_ctx,pte_idx,pte_ctx);  
+	};  
+	return 0;  
+}  
 
 ---
 
