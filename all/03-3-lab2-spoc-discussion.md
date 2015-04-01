@@ -131,8 +131,8 @@ va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x
 va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x7d400003  
 va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x7d400003  
 代码如下所示：  
-\#include <stdio.h>  
-\#include <stdlib.h>  
+\#include<stdio.h>  
+\#include<stdlib.h>  
 int char2int(char a){  
 	return (a>58)?(a-87):(a-48);  
 }  
