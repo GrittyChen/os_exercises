@@ -68,3 +68,187 @@ https://github.com/chyyuu/ucore_lab/blob/master/related_info/lab1/lab1-boot-with
 能够把个人思考题和上述知识点中的内容展示出来：即在ucore运行过程中通过`cprintf`函数来完整地展现出来进程A相关的动态执行和内部数据/状态变化的细节。(约全面细致约好)
 
 请完成如下练习，完成代码填写，并形成spoc练习报告
+> process 1 run!  
+process 0 wait  
+process 2 run!  
+kernel_execve: pid = 2, name = "exit".  
+user changed to kernel  
+kernel changed to user!  
+user changed to kernel  
+Iuser changed to kernel  
+ user changed to kernel  
+auser changed to kernel  
+muser changed to kernel  
+ user changed to kernel  
+tuser changed to kernel  
+huser changed to kernel  
+euser changed to kernel  
+ user changed to kernel  
+puser changed to kernel  
+auser changed to kernel  
+ruser changed to kernel  
+euser changed to kernel  
+nuser changed to kernel  
+tuser changed to kernel  
+.user changed to kernel  
+ user changed to kernel  
+Fuser changed to kernel  
+ouser changed to kernel  
+ruser changed to kernel  
+kuser changed to kernel  
+iuser changed to kernel  
+nuser changed to kernel  
+guser changed to kernel  
+ user changed to kernel  
+tuser changed to kernel  
+huser changed to kernel  
+euser changed to kernel  
+ user changed to kernel  
+cuser changed to kernel  
+huser changed to kernel  
+iuser changed to kernel  
+luser changed to kernel  
+duser changed to kernel  
+.user changed to kernel  
+.user changed to kernel  
+.user changed to kernel  
+user changed to kernel   
+user changed to kernel  
+Iuser changed to kernel  
+ user changed to kernel  
+auser changed to kernel  
+muser changed to kernel  
+ user changed to kernel  
+puser changed to kernel  
+auser changed to kernel   
+ruser changed to kernel  
+euser changed to kernel  
+nuser changed to kernel  
+tuser changed to kernel   
+,user changed to kernel   
+ user changed to kernel   
+fuser changed to kernel  
+ouser changed to kernel  
+ruser changed to kernel  
+kuser changed to kernel   
+ user changed to kernel   
+auser changed to kernel   
+ user changed to kernel   
+cuser changed to kernel  
+huser changed to kernel   
+iuser changed to kernel  
+luser changed to kernel   
+duser changed to kernel   
+ user changed to kernel   
+puser changed to kernel   
+iuser changed to kernel  
+duser changed to kernel  
+ user changed to kernel   
+3user changed to kernel   
+user changed to kernel   
+Iuser changed to kernel  
+ user changed to kernel  
+auser changed to kernel   
+muser changed to kernel   
+ user changed to kernel   
+tuser changed to kernel   
+huser changed to kernel   
+euser changed to kernel   
+ user changed to kernel   
+puser changed to kernel   
+auser changed to kernel   
+ruser changed to kernel   
+euser changed to kernel   
+nuser changed to kernel   
+tuser changed to kernel   
+,user changed to kernel   
+ user changed to kernel   
+wuser changed to kernel   
+auser changed to kernel   
+iuser changed to kernel  
+tuser changed to kernel  
+iuser changed to kernel   
+nuser changed to kernel   
+guser changed to kernel   
+ user changed to kernel   
+nuser changed to kernel   
+ouser changed to kernel   
+wuser changed to kernel   
+.user changed to kernel   
+.user changed to kernel   
+user changed to kernel   
+process 3 wait  
+process 3 run!  
+user changed to kernel  
+Iuser changed to kernel  
+ user changed to kernel  
+auser changed to kernel  
+muser changed to kernel   
+ user changed to kernel   
+tuser changed to kernel   
+huser changed to kernel   
+euser changed to kernel   
+ user changed to kernel   
+cuser changed to kernel   
+huser changed to kernel   
+iuser changed to kernel   
+luser changed to kernel   
+duser changed to kernel   
+.user changed to kernel   
+user changed to kernel   
+procee 3 yield!  
+user changed to kernel  
+procee 3 yield!  
+user changed to kernel  
+procee 3 yield!  
+user changed to kernel  
+procee 3 yield!  
+user changed to kernel  
+procee 3 yield!  
+user changed to kernel  
+procee 3 yield!  
+user changed to kernel   
+procee 3 yield!  
+user changed to kernel  
+process 3 exit!  
+process 2 run!  
+user changed to kernel  
+process 3 wait  
+user changed to kernel  
+process 0 wait  
+user changed to kernel  
+wuser changed to kernel  
+auser changed to kernel  
+iuser changed to kernel   
+tuser changed to kernel   
+puser changed to kernel   
+iuser changed to kernel  
+duser changed to kernel  
+ user changed to kernel   
+3user changed to kernel   
+ user changed to kernel   
+ouser changed to kernel   
+kuser changed to kernel   
+.user changed to kernel  
+user changed to kernel   
+euser changed to kernel   
+xuser changed to kernel   
+iuser changed to kernel  
+tuser changed to kernel  
+ user changed to kernel   
+puser changed to kernel   
+auser changed to kernel  
+suser changed to kernel  
+suser changed to kernel   
+.user changed to kernel   
+user changed to kernel    
+process 2 exit!   
+process 1 run!  
+process 0 wait   
+all user-mode processes have quit.   
+init check memory pass.   
+process 1 exit!   
+kernel panic at kern/process/proc.c:456:  
+    initproc exit.  
+Welcome to the kernel debug monitor!!  
+Type 'help' for a list of commands.  
