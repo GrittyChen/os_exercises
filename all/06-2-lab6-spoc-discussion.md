@@ -9,6 +9,9 @@
 
  - ucore中的调度点在哪里，完成了啥事？
  - 进程控制块中与调度相关的字段有哪些？
+
+> need_schedule, wait, exit, run
+
  - ucore的就绪队列数据结构在哪定义？在哪进行修改？
  - ucore的等待队列数据结构在哪定义？在哪进行修改？
 
@@ -40,5 +43,66 @@
 > 需写练习报告和简单编码，完成后放到git server 对应的git repo中
 
 ### 练习用的[lab6 spoc exercise project source code](https://github.com/chyyuu/ucore_lab/tree/master/labcodes_answer/lab6_result)
+
+> schedule has been run because current->neeed_resched is !  
+process 1 be picked, its lab6_stride is 2147483647  
+process 1 be dequeued  
+process 2 be enqueued  
+schedule has been run, because do_wait()!  
+process 2 be picked, its lab6_stride is 2147483647  
+process 2 be dequeued  
+kernel_execve: pid = 2, name = "exit".  
+I am the parent. Forking the child...  
+process 3 be enqueued  
+I am parent, fork a child pid 3  
+I am the parent, waiting now..  
+schedule has been run, because do_wait()!  
+process 3 be picked, its lab6_stride is 2147483647  
+process 3 be dequeued  
+I am the child.  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is -2  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is 2147483645  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued   
+process 3 be picked, its lab6_stride is -4  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is 2147483643  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is -6  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is 2147483641  
+process 3 be dequeued  
+schedule has been run because current->neeed_resched is !  
+process 3 be enqueued  
+process 3 be picked, its lab6_stride is -8  
+process 3 be dequeued  
+process 2 be enqueued  
+schedule has been run, because do_exit()!  
+process 2 be picked, its lab6_stride is -2  
+process 2 be dequeued   
+waitpid 3 ok.  
+exit pass.  
+process 1 be enqueued  
+schedule has been run, because do_exit()!  
+process 1 be picked, its lab6_stride is -2  
+process 1 be dequeued  
+schedule has been run, because do_wait()!  
+process 1 be enqueued  
+process 1 be picked, its lab6_stride is 2147483645  
+process 1 be dequeued  
+all user-mode processes have quit.  
+init check memory pass.  
 
 
