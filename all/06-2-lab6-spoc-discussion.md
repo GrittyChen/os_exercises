@@ -47,62 +47,255 @@
 > schedule has been run because current->neeed_resched is !  
 process 1 be picked, its lab6_stride is 2147483647  
 process 1 be dequeued  
+current's pid: 0  
+ next's pid: 1  
 process 2 be enqueued  
 schedule has been run, because do_wait()!  
 process 2 be picked, its lab6_stride is 2147483647  
 process 2 be dequeued  
-kernel_execve: pid = 2, name = "exit".  
-I am the parent. Forking the child...  
+current's pid: 1  
+ next's pid: 2  
+kernel_execve: pid = 2, name = "forktest".  
 process 3 be enqueued  
-I am parent, fork a child pid 3  
-I am the parent, waiting now..  
+process 4 be enqueued  
+process 5 be enqueued  
+process 6 be enqueued  
+process 7 be enqueued  
+process 8 be enqueued  
+process 9 be enqueued  
+process 10 be enqueued  
+process 11 be enqueued  
+process 12 be enqueued  
+process 13 be enqueued  
+process 14 be enqueued  
+process 15 be enqueued  
+process 16 be enqueued  
+process 17 be enqueued  
+process 18 be enqueued  
+process 19 be enqueued  
+process 20 be enqueued  
+process 21 be enqueued  
+process 22 be enqueued  
+process 23 be enqueued  
+process 24 be enqueued  
+process 25 be enqueued  
+process 26 be enqueued   
+process 28 be enqueued  
+process 29 be enqueued  
+process 30 be enqueued  
+process 31 be enqueued  
+process 32 be enqueued  
+process 33 be enqueued  
+process 34 be enqueued  
 schedule has been run, because do_wait()!  
-process 3 be picked, its lab6_stride is 2147483647  
-process 3 be dequeued  
-I am the child.  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is -2  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is 2147483645  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued   
-process 3 be picked, its lab6_stride is -4  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is 2147483643  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is -6  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is 2147483641  
-process 3 be dequeued  
-schedule has been run because current->neeed_resched is !  
-process 3 be enqueued  
-process 3 be picked, its lab6_stride is -8  
-process 3 be dequeued  
+process 34 be picked, its lab6_stride is 2147483647  
+process 34 be dequeued  
+current's pid: 2  
+ next's pid: 34  
+I am child 31  
 process 2 be enqueued  
 schedule has been run, because do_exit()!  
+process 33 be picked, its lab6_stride is 2147483647  
+process 33 be dequeued  
+current's pid: 34  
+ next's pid: 33  
+I am child 30  
+schedule has been run, because do_exit()!  
+process 32 be picked, its lab6_stride is 2147483647   
+process 32 be dequeued  
+current's pid: 33  
+ next's pid: 32  
+I am child 29  
+schedule has been run, because do_exit()!  
+process 31 be picked, its lab6_stride is 2147483647  
+process 31 be dequeued  
+current's pid: 32   
+ next's pid: 31  
+I am child 28  
+schedule has been run, because do_exit()!  
+process 30 be picked, its lab6_stride is 2147483647  
+process 30 be dequeued  
+current's pid: 31  
+ next's pid: 30  
+I am child 27  
+schedule has been run, because do_exit()!   
+process 29 be picked, its lab6_stride is 2147483647  
+process 29 be dequeued  
+current's pid: 30  
+ next's pid: 29  
+I am child 26  
+schedule has been run, because do_exit()!  
+process 28 be picked, its lab6_stride is 2147483647  
+process 28 be dequeued  
+current's pid: 29  
+ next's pid: 28  
+I am child 25  
+schedule has been run, because do_exit()!  
+process 27 be picked, its lab6_stride is 2147483647  
+process 27 be dequeued  
+current's pid: 28  
+ next's pid: 27  
+I am child 24  
+schedule has been run, because do_exit()!  
+process 26 be picked, its lab6_stride is 2147483647  
+process 26 be dequeued  
+current's pid: 27  
+ next's pid: 26   
+I am child 23  
+schedule has been run, because do_exit()!  
+process 25 be picked, its lab6_stride is 2147483647  
+process 25 be dequeued  
+current's pid: 26  
+ next's pid: 25  
+I am child 22  
+schedule has been run, because do_exit()!  
+process 24 be picked, its lab6_stride is 2147483647  
+process 24 be dequeued   
+current's pid: 25  
+ next's pid: 24  
+I am child 21  
+schedule has been run, because do_exit()!  
+process 23 be picked, its lab6_stride is 2147483647  
+process 23 be dequeued  
+current's pid: 24  
+ next's pid: 23  
+I am child 20  
+schedule has been run, because do_exit()!   
+process 22 be picked, its lab6_stride is 2147483647 
+process 22 be dequeued  
+current's pid: 23  
+ next's pid: 22  
+I am child 19  
+schedule has been run, because do_exit()!  
+process 21 be picked, its lab6_stride is 2147483647  
+process 21 be dequeued  
+current's pid: 22   
+ next's pid: 21  
+I am child 18   
+schedule has been run, because do_exit()!  
+process 20 be picked, its lab6_stride is 2147483647  
+process 20 be dequeued  
+current's pid: 21  
+ next's pid: 20  
+I am child 17  
+schedule has been run, because do_exit()!  
+process 19 be picked, its lab6_stride is 2147483647   
+process 19 be dequeued  
+current's pid: 20  
+ next's pid: 19  
+I am child 16  
+schedule has been run, because do_exit()!  
+process 18 be picked, its lab6_stride is 2147483647  
+process 18 be dequeued  
+current's pid: 19  
+ next's pid: 18  
+I am child 15  
+schedule has been run, because do_exit()!  
+process 17 be picked, its lab6_stride is 2147483647  
+process 17 be dequeued  
+current's pid: 18  
+ next's pid: 17  
+I am child 14  
+schedule has been run, because do_exit()!  
+process 16 be picked, its lab6_stride is 2147483647  
+process 16 be dequeued  
+current's pid: 17  
+ next's pid: 16  
+I am child 13  
+schedule has been run, because do_exit()!  
+process 15 be picked, its lab6_stride is 2147483647  
+process 15 be dequeued  
+current's pid: 16  
+ next's pid: 15  
+I am child 12  
+schedule has been run, because do_exit()!  
+process 14 be picked, its lab6_stride is 2147483647  
+process 14 be dequeued  
+current's pid: 15  
+ next's pid: 14  
+I am child 11  
+schedule has been run, because do_exit()!  
+process 13 be picked, its lab6_stride is 2147483647  
+process 13 be dequeued  
+current's pid: 14  
+ next's pid: 13  
+I am child 10  
+schedule has been run, because do_exit()!  
+process 12 be picked, its lab6_stride is 2147483647  
+process 12 be dequeued  
+current's pid: 13  
+ next's pid: 12  
+I am child 9  
+schedule has been run, because do_exit()!  
+process 11 be picked, its lab6_stride is 2147483647  
+process 11 be dequeued  
+current's pid: 12  
+ next's pid: 11  
+I am child 8  
+schedule has been run, because do_exit()!  
+process 10 be picked, its lab6_stride is 2147483647  
+process 10 be dequeued  
+current's pid: 11  
+ next's pid: 10  
+I am child 7  
+schedule has been run, because do_exit()!  
+process 9 be picked, its lab6_stride is 2147483647  
+process 9 be dequeued  
+current's pid: 10  
+ next's pid: 9  
+I am child 6  
+schedule has been run, because do_exit()!  
+process 8 be picked, its lab6_stride is 2147483647  
+process 8 be dequeued  
+current's pid: 9  
+ next's pid: 8  
+I am child 5  
+schedule has been run, because do_exit()!  
+process 7 be picked, its lab6_stride is 2147483647  
+process 7 be dequeued  
+current's pid: 8  
+ next's pid: 7   
+I am child 4  
+schedule has been run, because do_exit()!  
+process 6 be picked, its lab6_stride is 2147483647  
+process 6 be dequeued  
+current's pid: 7  
+ next's pid: 6  
+I am child 3  
+schedule has been run, because do_exit()!  
+process 5 be picked, its lab6_stride is 2147483647  
+process 5 be dequeued  
+current's pid: 6  
+ next's pid: 5  
+I am child 2  
+schedule has been run, because do_exit()!  
+process 4 be picked, its lab6_stride is 2147483647  
+process 4 be dequeued  
+current's pid: 5  
+ next's pid: 4  
+I am child 1  
+schedule has been run, because do_exit()!  
+process 3 be picked, its lab6_stride is 2147483647  
+process 3 be dequeued  
+current's pid: 4  
+ next's pid: 3  
+I am child 0  
+schedule has been run, because do_exit()!  
 process 2 be picked, its lab6_stride is -2  
-process 2 be dequeued   
-waitpid 3 ok.  
-exit pass.  
+process 2 be dequeued  
+current's pid: 3  
+ next's pid: 2  
+forktest pass.  
 process 1 be enqueued  
 schedule has been run, because do_exit()!  
 process 1 be picked, its lab6_stride is -2  
 process 1 be dequeued  
+current's pid: 2  
+ next's pid: 1  
 schedule has been run, because do_wait()!  
 process 1 be enqueued  
 process 1 be picked, its lab6_stride is 2147483645  
 process 1 be dequeued  
 all user-mode processes have quit.  
-init check memory pass.  
 
 
