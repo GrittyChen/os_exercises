@@ -41,18 +41,95 @@
 2. （spoc)了解race condition. 进入[race-condition代码目录](https://github.com/chyyuu/ucore_lab/tree/master/related_info/lab7/race-condition)。
 
  - 执行 `./x86.py -p loop.s -t 1 -i 100 -R dx`， 请问`dx`的值是什么？
+
+> dx = -1
+
  - 执行 `./x86.py -p loop.s -t 2 -i 100 -a dx=3,dx=3 -R dx` ， 请问`dx`的值是什么？
+
+>  dx = -1
+
  - 执行 `./x86.py -p loop.s -t 2 -i 3 -r -a dx=3,dx=3 -R dx`， 请问`dx`的值是什么？
+
+> dx = -1
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 1 -M 2000`, 请问变量x的值是什么？
+
+> x = 1
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -a bx=3 -M 2000`, 请问变量x的值是什么？为何每个线程要循环3次？
+
+> x = 6,因为bx是循环计数,所以每个线程要循环bx次,即3次
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 0`， 请问变量x的值是什么？
+
+> x = 2
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 1`， 请问变量x的值是什么？
+
+> x = 2
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -t 2 -M 2000 -i 4 -r -s 2`， 请问变量x的值是什么？ 
+
+> x = 2
+
  - 变量x的内存地址为2000, `./x86.py -p looping-race-nolock.s -a bx=1 -t 2 -M 2000 -i 1`， 请问变量x的值是什么？ 
+
+> x = 1
 
 3. （spoc） 了解software-based lock, hardware-based lock, [software-hardware-lock代码目录](https://github.com/chyyuu/ucore_lab/tree/master/related_info/lab7/software-hardware-locks)
 
   - 理解flag.s,peterson.s,test-and-set.s,ticket.s,test-and-test-and-set.s 请通过x86.py分析这些代码是否实现了锁机制？请给出你的实验过程和结论说明。能否设计新的硬件原子操作指令Compare-And-Swap,Fetch-And-Add？
+
+> flag.s未实现锁机制:  
+       Thread 0                Thread 1         
+1000 mov  flag, %ax  
+1001 test $0, %ax  
+------ Interrupt ------  ------ Interrupt ------  
+                         1000 mov  flag, %ax  
+                         1001 test $0, %ax  
+------ Interrupt ------  ------ Interrupt ------  
+1002 jne  .acquire  
+1003 mov  $1, flag  
+------ Interrupt ------  ------ Interrupt ------  
+                         1002 jne  .acquire  
+                         1003 mov  $1, flag  
+这两个进程都有可能得到相同的flag值，即两个进程可能会同时进入临界区。  
+peterson.s未实现锁机制:  
+       Thread 0                Thread 1         
+1000 lea flag, %fx  
+1001 mov %bx, %cx  
+------ Interrupt ------  ------ Interrupt ------  
+                         1000 lea flag, %fx  
+                         1001 mov %bx, %cx  
+------ Interrupt ------  ------ Interrupt ------  
+1002 neg %cx  
+1003 add $1, %cx  
+------ Interrupt ------  ------ Interrupt ------  
+                         1002 neg %cx  
+                         1003 add $1, %cx  
+------ Interrupt ------  ------ Interrupt ------  
+1004 mov $1, 0(%fx,%bx,4)  
+1005 mov %cx, turn  
+------ Interrupt ------  ------ Interrupt ------  
+                         1004 mov $1, 0(%fx,%bx,4)  
+                         1005 mov %cx, turn  
+------ Interrupt ------  ------ Interrupt ------  
+1006 mov 0(%fx,%cx,4), %ax  
+1007 test $1, %ax  
+------ Interrupt ------  ------ Interrupt ------    
+                         1006 mov 0(%fx,%cx,4), %ax  
+                         1007 test $1, %ax  
+------ Interrupt ------  ------ Interrupt ------  
+1008 jne .fini  
+1012 mov count, %ax  
+------ Interrupt ------  ------ Interrupt ------    
+                         1008 jne .fini  
+                         1012 mov count, %ax  
+两个进程有可能同时将自身的flag设成1然后就都不能进入临界区;  
+test-and-set.s实现了锁机制,因为不管在任何位置切换进程都能保证有且只有进程进入临街区  
+ticket.s实现了锁机制,因为不论在那个位置切换进程都会使得每个进程获取到进入临界区时其他进程都不能获取到进入临界区的锁;  
+
+
 ```
 Compare-And-Swap
 
