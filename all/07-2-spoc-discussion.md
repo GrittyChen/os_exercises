@@ -57,13 +57,11 @@ s.count--;              //有可用资源，占用该资源；
 ```
 #coding=utf-8
 import threading  
-
 N = 10
 mutex = threading.Semaphore(1)
 Beginready = threading.Semaphore(0)
 Testready = threading.Semaphore(0)
 Endready = threading.Semaphore(0)
-
 def thread_run(name):
 	if(name == "teacher"):
 		mutex.acquire()
@@ -87,7 +85,6 @@ def thread_run(name):
 		print "交卷\n"
 		print "离开\n"
 		Endready.release()
-
 def main(thread_num):  
     thread_list = list();  
     # 先创建线程对象  
@@ -98,15 +95,12 @@ def main(thread_num):
  		else:
  			thread_name = "student"
  			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
-      
     # 启动所有线程     
     for thread in thread_list:  
         thread.start()  
-      
     # 主线程中等待所有子线程退出  
     for thread in thread_list:  
         thread.join()  
-  
 if __name__ == "__main__":  
     main(N+1)  
 ```
@@ -114,7 +108,6 @@ if __name__ == "__main__":
 ```
 #coding=utf-8
 import threading  
-
 N = 10#学生数量
 mutex = threading.Condition()
 cond = threading.Condition()
@@ -122,7 +115,6 @@ end = threading.Condition()
 Beginready = -9
 Testready = 0
 Endready = -9
-
 def thread_run(name):
 	global Testready
 	global Beginready
@@ -160,7 +152,6 @@ def thread_run(name):
 		Endready += 1
 		end.notify()
 		end.release()
-
 def main(thread_num):  
     thread_list = list();  
     # 先创建线程对象  
@@ -171,15 +162,12 @@ def main(thread_num):
  		else:
  			thread_name = "student"
  			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
-      
     # 启动所有线程     
     for thread in thread_list:  
         thread.start()  
-      
     # 主线程中等待所有子线程退出  
     for thread in thread_list:  
         thread.join()  
-  
 if __name__ == "__main__":  
     main(N+1)  
 ```
