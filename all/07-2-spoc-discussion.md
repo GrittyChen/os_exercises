@@ -51,3 +51,135 @@ s.count--;              //有可用资源，占用该资源；
 ## 小组思考题
 
 1. （spoc） 每人用python threading机制用信号量和条件变量两种手段分别实现[47个同步问题](07-2-spoc-pv-problems.md)中的一题。向勇老师的班级从前往后，陈渝老师的班级从后往前。请先理解[]python threading 机制的介绍和实例](https://github.com/chyyuu/ucore_lab/tree/master/related_info/lab7/semaphore_condition)
+
+> 代码如下:
+信号量方法:  
+```
+#coding=utf-8
+import threading  
+
+N = 10
+mutex = threading.Semaphore(1)
+Beginready = threading.Semaphore(0)
+Testready = threading.Semaphore(0)
+Endready = threading.Semaphore(0)
+
+def thread_run(name):
+	if(name == "teacher"):
+		mutex.acquire()
+		print "老师进教室!\n"
+		mutex.release()
+		for i in range(N):
+			Beginready.acquire()
+		print "开始发卷!\n"
+		Testready.release()
+		for i in range(N):
+			Endready.acquire()
+		print "老师离开!\n"
+	else:
+		mutex.acquire()
+		print "学生进教室!\n"
+		mutex.release()
+		Beginready.release()
+		Testready.acquire()
+		Testready.release()
+		print "答题\n"
+		print "交卷\n"
+		print "离开\n"
+		Endready.release()
+
+def main(thread_num):  
+    thread_list = list();  
+    # 先创建线程对象  
+    for i in range(0, thread_num):
+ 		if(i == 0):
+ 			thread_name = "teacher"
+ 			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
+ 		else:
+ 			thread_name = "student"
+ 			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
+      
+    # 启动所有线程     
+    for thread in thread_list:  
+        thread.start()  
+      
+    # 主线程中等待所有子线程退出  
+    for thread in thread_list:  
+        thread.join()  
+  
+if __name__ == "__main__":  
+    main(N+1)  
+```
+条件量方法:  
+```
+#coding=utf-8
+import threading  
+
+N = 10#学生数量
+mutex = threading.Condition()
+cond = threading.Condition()
+end = threading.Condition()
+Beginready = -9
+Testready = 0
+Endready = -9
+
+def thread_run(name):
+	global Testready
+	global Beginready
+	global Endready
+	if(name == "teacher"):
+		mutex.acquire()
+		print "老师进教室!\n"
+		mutex.release()
+		cond.acquire()
+		if(Beginready < 1):
+			cond.wait()
+		print "开始发卷!\n"
+		Testready += 1
+		cond.notify()
+		cond.release()
+		end.acquire()
+		if(Endready != 1):
+			end.wait()
+		print "老师离开!\n"
+		end.release()
+	else:
+		mutex.acquire()
+		print "学生进教室!\n"
+		Beginready += 1
+		mutex.release()
+		cond.acquire()
+		cond.notifyAll()
+		if(Testready != 1):
+			cond.wait()
+		print "答题\n"
+		print "交卷\n"
+		print "离开\n"
+		cond.release()
+		end.acquire()
+		Endready += 1
+		end.notify()
+		end.release()
+
+def main(thread_num):  
+    thread_list = list();  
+    # 先创建线程对象  
+    for i in range(0, thread_num):
+ 		if(i == 0):
+ 			thread_name = "teacher"
+ 			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
+ 		else:
+ 			thread_name = "student"
+ 			thread_list.append(threading.Thread(target = thread_run, name = thread_name, args = (thread_name,)))
+      
+    # 启动所有线程     
+    for thread in thread_list:  
+        thread.start()  
+      
+    # 主线程中等待所有子线程退出  
+    for thread in thread_list:  
+        thread.join()  
+  
+if __name__ == "__main__":  
+    main(N+1)  
+```
