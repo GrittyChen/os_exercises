@@ -40,7 +40,9 @@
 ## 小组思考题
  - (spoc)完成磁盘访问与磁盘寻道算法的作业，具体帮助和要求信息请看[disksim指导信息](https://github.com/chyyuu/ucore_lab/blob/master/related_info/lab8/disksim-homework.md)和[disksim参考代码](https://github.com/chyyuu/ucore_lab/blob/master/related_info/lab8/disksim-homework.py)
 
-> 组员:陈刚2012011389，战裕隆2012011388，周界2012011394，马晓彬2012011402 
+> 
+```
+组员:陈刚2012011389，战裕隆2012011388，周界2012011394，马晓彬2012011402  
 问题1:  
 1)-a 0 : seek=0; rotate=165; transfer=30; total=165;  
 2)-a 6 : seek=0; rotate=345; transfer=30; total=375;  
@@ -71,6 +73,7 @@ block=11 : seek=0  rotate=0  transfer=30  total=30;
 block=1 : seek=0  rotate=30  transfer=30  total=60;  
 block=12 : seek=40  rotate=300  transfer=30  total=370;  
 block=13 : seek=0  rotate=0  transfer=30  total=30;   
-block=24 : seek=40  rotate=300 transfer=30  total=370;  
+block=24 : seek=40  rotate=300 transfer=30  total=370; 
+```
 
 
